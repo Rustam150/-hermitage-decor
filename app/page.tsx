@@ -9,33 +9,30 @@ export default function Home() {
     <div className="min-h-screen bg-white">
       <Header />
 
-      {/* Быстрые ссылки (категории) */}
-      <div className="border-b border-gray-200 bg-white sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 py-3">
-          <div className="grid grid-cols-5 md:grid-cols-10 gap-2">
-            {[
-              { name: "Спальня", slug: "spalnya" },
-              { name: "Гостиная", slug: "gostinaya" },
-              { name: "Столовая", slug: "stolovaya" },
-              { name: "Кухня", slug: "kuhnya" },
-              { name: "Мягкая мебель", slug: "myagkaya" },
-              { name: "Посуда", slug: "posuda" },
-              { name: "Ароматы", slug: "aromaty" },
-              { name: "Текстиль", slug: "tekstil" },
-              { name: "Новинки", slug: "novinki" },
-              { name: "Скидки", slug: "skidki" },
-            ].map((item) => (
-              <Link
-                key={item.name}
-                href={`/catalog/${item.slug}`}
-                className="text-center py-2 px-1 rounded-lg text-sm font-medium text-gray-700 hover:text-white hover:bg-amber-600 transition-all duration-200"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
+      {/* Быстрые ссылки (только для десктопа) */}
+<div className="hidden md:block border-b border-gray-200 bg-white sticky top-0 z-10">
+  <div className="max-w-7xl mx-auto px-4 py-3">
+    <div className="grid grid-cols-5 lg:grid-cols-11 gap-2">
+      {[
+        { name: "Спальня", slug: "spalnya" },
+        { name: "Гостиная", slug: "gostinaya" },
+        { name: "Столовая", slug: "stolovaya" },
+        { name: "Кухня", slug: "kuhnya" },
+        { name: "Мягкая мебель", slug: "myagkaya" },
+        { name: "Посуда", slug: "posuda" },
+        { name: "Ароматы", slug: "aromaty" },
+        { name: "Текстиль", slug: "tekstil" },
+        { name: "Освещение", slug: "lighting" },
+        { name: "Новинки", slug: "novinki" },
+        { name: "Скидки", slug: "skidki" },
+      ].map((item) => (
+        <Link key={item.name} href={`/catalog/${item.slug}`} className="text-center py-2 px-1 rounded-lg text-sm font-medium text-gray-700 hover:text-white hover:bg-amber-600 transition-all duration-200">
+          {item.name}
+        </Link>
+      ))}
+    </div>
+  </div>
+</div>
 
       {/* Основной контент */}
       <main className="max-w-7xl mx-auto px-4 py-8">
