@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { Search, User, Heart, ShoppingBag } from "lucide-react";
+import { Search, User, Heart, ShoppingBag, X } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useFavorites } from "@/context/FavoritesContext";
 import { useAuth } from "@/context/AuthContext";
@@ -11,6 +12,7 @@ export default function Header() {
   const { totalItems } = useCart();
   const { totalFavorites } = useFavorites();
   const { user } = useAuth();
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
 
   return (
     <header className="border-b border-gray-200 bg-white">
@@ -41,7 +43,7 @@ export default function Header() {
           {/* Иконки */}
           <div className="flex items-center gap-4 shrink-0">
             {/* Поиск на мобилке — иконка */}
-            <button className="md:hidden p-1">
+            <button onClick={() => setIsMobileSearchOpen(true)} className="md:hidden p-1">
               <Search className="w-5 h-5 text-gray-600" />
             </button>
             
@@ -149,6 +151,26 @@ export default function Header() {
           <Link href="/delivery" className="hover:text-amber-600 transition">Доставка</Link>
         </nav>
       </div>
+
+      {/* Мобильный поиск (выезжающий) */}
+      {isMobileSearchOpen && (
+        <div className="fixed inset-x-0 top-0 z-50 bg-white p-4 shadow-md md:hidden">
+          <div className="flex items-center gap-2">
+            <form action="/search" method="GET" className="flex-1">
+              <input
+                type="text"
+                name="q"
+                placeholder="Поиск товаров..."
+                className="w-full px-4 py-2 border border-gray-300 rounded-full text-sm focus:outline-none focus:border-amber-500"
+                autoFocus
+              />
+            </form>
+            <button onClick={() => setIsMobileSearchOpen(false)} className="p-2">
+              <X className="w-5 h-5 text-gray-600" />
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
