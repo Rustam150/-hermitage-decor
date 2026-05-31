@@ -171,6 +171,8 @@ export default function CategoryPage() {
   const [sortBy, setSortBy] = useState("default");
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
   const [isColorOpen, setIsColorOpen] = useState(false);
+  const [isBrandsOpen, setIsBrandsOpen] = useState(false);
+  const [isMaterialsOpen, setIsMaterialsOpen] = useState(false);
 
   useEffect(() => {
     if (typeParam) {
@@ -244,13 +246,14 @@ export default function CategoryPage() {
           <h1 className="text-3xl font-light text-gray-900">{categoryName}</h1>
         </div>
 
+        {/* Кнопка фильтров для мобилки */}
         <button onClick={() => setIsFilterOpen(true)} className="md:hidden flex items-center gap-2 mb-4 px-4 py-2 border border-gray-300 rounded-lg text-gray-700">
           <SlidersHorizontal className="w-4 h-4" /> Фильтры
         </button>
 
         <div className="flex flex-col md:flex-row gap-8">
-          {/* Левое меню (категории + фильтры) */}
-          <div className="md:w-64 shrink-0">
+          {/* Левое меню (категории + фильтры) — ТОЛЬКО ДЛЯ ДЕСКТОПА */}
+          <div className="hidden md:block md:w-64 shrink-0">
             <div className="sticky top-20">
               {currentSubcategories.length > 0 && (
                 <div className="mb-8">
@@ -269,8 +272,11 @@ export default function CategoryPage() {
                   </div>
                 </div>
               )}
+              
+              {/* ФИЛЬТРЫ ДЛЯ ДЕСКТОПА */}
               <div className="border-t border-gray-200 pt-6">
                 <h3 className="font-medium text-gray-900 mb-4">Фильтры</h3>
+                
                 <div className="mb-6">
                   <h4 className="text-sm font-medium text-gray-900 mb-2">Цена</h4>
                   <div className="flex gap-2">
@@ -278,27 +284,43 @@ export default function CategoryPage() {
                     <input type="number" placeholder="до" value={priceMax} onChange={e => setPriceMax(e.target.value)} className="w-full px-3 py-1.5 border border-gray-300 rounded text-sm text-gray-900 placeholder-gray-400" />
                   </div>
                 </div>
+                
                 <div className="mb-6">
-                  <h4 className="text-sm font-medium text-gray-900 mb-2">Бренд / Страна</h4>
-                  {brands.map(brand => (
-                    <label key={brand} className="flex items-center gap-2 mb-2 text-sm text-gray-700">
-                      <input type="checkbox" checked={selectedBrands.includes(brand)} onChange={() => toggleBrand(brand)} className="rounded" /> {brand}
-                    </label>
-                  ))}
+                  <button onClick={() => setIsBrandsOpen(!isBrandsOpen)} className="flex justify-between items-center w-full text-sm font-medium text-gray-900 mb-2">
+                    <span>Бренд / Страна</span>
+                    <span>{isBrandsOpen ? "−" : "+"}</span>
+                  </button>
+                  {isBrandsOpen && (
+                    <div className="space-y-2 mt-2 max-h-48 overflow-y-auto">
+                      {brands.map((brand) => (
+                        <label key={brand} className="flex items-center gap-2 text-sm text-gray-700">
+                          <input type="checkbox" checked={selectedBrands.includes(brand)} onChange={() => toggleBrand(brand)} className="rounded" />
+                          {brand}
+                        </label>
+                      ))}
+                    </div>
+                  )}
                 </div>
+
                 <div className="mb-6">
-                  <h4 className="text-sm font-medium text-gray-900 mb-2">Материал</h4>
-                  {materials.map(material => (
-                    <label key={material} className="flex items-center gap-2 mb-2 text-sm text-gray-700">
-                      <input type="checkbox" checked={selectedMaterials.includes(material)} onChange={() => toggleMaterial(material)} className="rounded" /> {material}
-                    </label>
-                  ))}
+                  <button onClick={() => setIsMaterialsOpen(!isMaterialsOpen)} className="flex justify-between items-center w-full text-sm font-medium text-gray-900 mb-2">
+                    <span>Материал</span>
+                    <span>{isMaterialsOpen ? "−" : "+"}</span>
+                  </button>
+                  {isMaterialsOpen && (
+                    <div className="space-y-2 mt-2 max-h-48 overflow-y-auto">
+                      {materials.map((material) => (
+                        <label key={material} className="flex items-center gap-2 text-sm text-gray-700">
+                          <input type="checkbox" checked={selectedMaterials.includes(material)} onChange={() => toggleMaterial(material)} className="rounded" />
+                          {material}
+                        </label>
+                      ))}
+                    </div>
+                  )}
                 </div>
+
                 <div className="mb-6">
-                  <button
-                    onClick={() => setIsColorOpen(!isColorOpen)}
-                    className="flex justify-between items-center w-full text-sm font-medium text-gray-900 mb-2"
-                  >
+                  <button onClick={() => setIsColorOpen(!isColorOpen)} className="flex justify-between items-center w-full text-sm font-medium text-gray-900 mb-2">
                     <span>Цвет</span>
                     <span>{isColorOpen ? "−" : "+"}</span>
                   </button>
@@ -306,42 +328,19 @@ export default function CategoryPage() {
                     <div className="space-y-2 mt-2 max-h-48 overflow-y-auto">
                       {colors.map((color) => (
                         <label key={color} className="flex items-center gap-2 text-sm text-gray-700">
-                          <input
-                            type="checkbox"
-                            checked={selectedColors.includes(color)}
-                            onChange={() => toggleColor(color)}
-                            className="rounded"
-                          />
-                          <span
-                            className="w-4 h-4 rounded-full border border-gray-300"
-                            style={{
-                              backgroundColor:
-                                color === "Белый" ? "#fff" :
-                                color === "Черный" ? "#000" :
-                                color === "Серый" ? "#9ca3af" :
-                                color === "Коричневый" ? "#8b5a2b" :
-                                color === "Зеленый" ? "#22c55e" :
-                                color === "Синий" ? "#3b82f6" :
-                                color === "Красный" ? "#ef4444" :
-                                color === "Розовый" ? "#ec4899" :
-                                color === "Бордовый" ? "#7f1d1d" :
-                                color === "Орех" ? "#b45309" :
-                                color === "Венге" ? "#4a2c2c" :
-                                color === "Дуб" ? "#d97706" :
-                                color === "Золотой" ? "#eab308" :
-                                color === "Серебро" ? "#9ca3af" :
-                                "#d1d5db"
-                            }}
-                          ></span>
+                          <input type="checkbox" checked={selectedColors.includes(color)} onChange={() => toggleColor(color)} className="rounded" />
+                          <span className="w-3 h-3 rounded-full border border-gray-300 inline-block" style={{ backgroundColor: color === "Белый" ? "#fff" : color === "Черный" ? "#000" : color === "Серый" ? "#9ca3af" : color === "Коричневый" ? "#8b5a2b" : "#d1d5db" }}></span>
                           {color}
                         </label>
                       ))}
                     </div>
                   )}
                 </div>
+
                 <div className="mb-6">
                   <label className="flex items-center gap-2 text-sm text-gray-700">
-                    <input type="checkbox" checked={showInStock} onChange={e => setShowInStock(e.target.checked)} className="rounded" /> Только в наличии
+                    <input type="checkbox" checked={showInStock} onChange={e => setShowInStock(e.target.checked)} className="rounded" />
+                    Только в наличии
                   </label>
                 </div>
               </div>
@@ -371,7 +370,7 @@ export default function CategoryPage() {
         </div>
       </div>
 
-      {/* Мобильные фильтры (выпадающие списки как у Hoff) */}
+      {/* Мобильные фильтры (модалка) */}
       {isFilterOpen && (
         <div className="fixed inset-0 z-50 bg-white overflow-y-auto md:hidden">
           <div className="p-4 border-b flex justify-between items-center sticky top-0 bg-white">
@@ -381,106 +380,60 @@ export default function CategoryPage() {
             </button>
           </div>
           <div className="p-4 space-y-4">
-            
-            {/* Цена */}
             <div>
               <h4 className="text-sm font-medium text-gray-900 mb-2">Цена</h4>
               <div className="flex gap-2">
-                <input
-                  type="number"
-                  placeholder="от"
-                  value={priceMin}
-                  onChange={(e) => setPriceMin(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-400"
-                />
-                <input
-                  type="number"
-                  placeholder="до"
-                  value={priceMax}
-                  onChange={(e) => setPriceMax(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-400"
-                />
+                <input type="number" placeholder="от" value={priceMin} onChange={e => setPriceMin(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900" />
+                <input type="number" placeholder="до" value={priceMax} onChange={e => setPriceMax(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900" />
+              </div>
+            </div>
+            
+            <div>
+              <h4 className="text-sm font-medium text-gray-900 mb-2">Бренд / Страна</h4>
+              <div className="space-y-2 max-h-40 overflow-y-auto">
+                {brands.map((brand) => (
+                  <label key={brand} className="flex items-center gap-2 text-sm text-gray-700">
+                    <input type="checkbox" checked={selectedBrands.includes(brand)} onChange={() => toggleBrand(brand)} className="rounded" />
+                    {brand}
+                  </label>
+                ))}
               </div>
             </div>
 
-            {/* Бренд / Страна (выпадающий список) */}
-            <div>
-              <h4 className="text-sm font-medium text-gray-900 mb-2">Бренд / Страна</h4>
-              <select
-                multiple
-                size={3}
-                value={selectedBrands}
-                onChange={(e) => {
-                  const values = Array.from(e.target.selectedOptions, opt => opt.value);
-                  setSelectedBrands(values);
-                }}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900"
-              >
-                {brands.map((brand) => (
-                  <option key={brand} value={brand}>{brand}</option>
-                ))}
-              </select>
-              <p className="text-xs text-gray-400 mt-1">Удерживайте Ctrl для выбора нескольких</p>
-            </div>
-
-            {/* Материал (выпадающий список) */}
             <div>
               <h4 className="text-sm font-medium text-gray-900 mb-2">Материал</h4>
-              <select
-                multiple
-                size={4}
-                value={selectedMaterials}
-                onChange={(e) => {
-                  const values = Array.from(e.target.selectedOptions, opt => opt.value);
-                  setSelectedMaterials(values);
-                }}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900"
-              >
-                {materials.slice(0, 8).map((material) => (
-                  <option key={material} value={material}>{material}</option>
+              <div className="space-y-2 max-h-40 overflow-y-auto">
+                {materials.map((material) => (
+                  <label key={material} className="flex items-center gap-2 text-sm text-gray-700">
+                    <input type="checkbox" checked={selectedMaterials.includes(material)} onChange={() => toggleMaterial(material)} className="rounded" />
+                    {material}
+                  </label>
                 ))}
-              </select>
-              <p className="text-xs text-gray-400 mt-1">Удерживайте Ctrl для выбора нескольких</p>
+              </div>
             </div>
 
-            {/* Цвет (выпадающий список) */}
             <div>
               <h4 className="text-sm font-medium text-gray-900 mb-2">Цвет</h4>
-              <select
-                multiple
-                size={4}
-                value={selectedColors}
-                onChange={(e) => {
-                  const values = Array.from(e.target.selectedOptions, opt => opt.value);
-                  setSelectedColors(values);
-                }}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900"
-              >
-                {colors.slice(0, 10).map((color) => (
-                  <option key={color} value={color}>{color}</option>
+              <div className="space-y-2 max-h-40 overflow-y-auto">
+                {colors.map((color) => (
+                  <label key={color} className="flex items-center gap-2 text-sm text-gray-700">
+                    <input type="checkbox" checked={selectedColors.includes(color)} onChange={() => toggleColor(color)} className="rounded" />
+                    <span className="w-3 h-3 rounded-full border border-gray-300 inline-block ml-1" style={{ backgroundColor: color === "Белый" ? "#fff" : color === "Черный" ? "#000" : color === "Серый" ? "#9ca3af" : color === "Коричневый" ? "#8b5a2b" : "#d1d5db" }}></span>
+                    {color}
+                  </label>
                 ))}
-              </select>
-              <p className="text-xs text-gray-400 mt-1">Удерживайте Ctrl для выбора нескольких</p>
+              </div>
             </div>
 
-            {/* Только в наличии */}
             <div>
               <label className="flex items-center gap-2 text-sm text-gray-700">
-                <input
-                  type="checkbox"
-                  checked={showInStock}
-                  onChange={(e) => setShowInStock(e.target.checked)}
-                  className="rounded"
-                />
+                <input type="checkbox" checked={showInStock} onChange={e => setShowInStock(e.target.checked)} className="rounded" />
                 Только в наличии
               </label>
             </div>
 
-            <button
-              onClick={() => setIsFilterOpen(false)}
-              className="w-full bg-gray-900 text-white py-2.5 rounded-lg font-medium mt-4"
-            >
-              Показать товары
+            <button onClick={() => setIsFilterOpen(false)} className="w-full bg-gray-900 text-white py-2.5 rounded-lg font-medium mt-4">
+              Применить
             </button>
           </div>
         </div>
