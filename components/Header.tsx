@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Search, User, Heart, ShoppingBag, Menu } from "lucide-react";
+import { Search, User, Heart, ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useFavorites } from "@/context/FavoritesContext";
 import { useAuth } from "@/context/AuthContext";
+import MobileMenu from "@/components/MobileMenu";
 
 export default function Header() {
   const { totalItems } = useCart();
@@ -61,13 +62,14 @@ export default function Header() {
                 </span>
               )}
             </Link>
-            <button className="md:hidden">
-              <Menu className="w-5 h-5 text-gray-600" />
-            </button>
+            {/* Бургер-меню для мобилки */}
+            <div className="md:hidden">
+              <MobileMenu />
+            </div>
           </div>
         </div>
 
-        {/* Навигация с выпадающим меню "Комнаты" */}
+        {/* Навигация с выпадающим меню "Комнаты" (только для десктопа) */}
         <nav className="hidden md:flex gap-8 py-2 text-sm font-medium text-gray-700 border-t border-gray-100">
           <a href="#" className="hover:text-amber-600 transition">Каталог</a>
           
