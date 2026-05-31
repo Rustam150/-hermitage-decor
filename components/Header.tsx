@@ -25,14 +25,14 @@ export default function Header() {
             </span>
           </Link>
 
-          {/* Поиск — только на десктопе */}
+          {/* Поиск — только на десктопе (ИСПРАВЛЕН) */}
           <form action="/search" method="GET" className="hidden md:flex flex-1 max-w-2xl">
             <div className="relative w-full">
               <input
                 type="text"
                 name="q"
                 placeholder="Поиск товаров..."
-                className="w-full px-5 py-2.5 pr-12 border border-gray-300 rounded-full text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition"
+                className="w-full px-5 py-2.5 pr-12 border border-gray-300 rounded-full text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition bg-white"
               />
               <button type="submit" className="absolute right-4 top-1/2 -translate-y-1/2">
                 <Search className="w-4 h-4 text-gray-400 hover:text-amber-500 transition" />
@@ -42,12 +42,10 @@ export default function Header() {
 
           {/* Иконки */}
           <div className="flex items-center gap-4 shrink-0">
-            {/* Поиск на мобилке — иконка */}
             <button onClick={() => setIsMobileSearchOpen(true)} className="md:hidden p-1">
               <Search className="w-5 h-5 text-gray-600" />
             </button>
             
-            {/* Профиль: десктоп с подписью, мобилка только иконка */}
             <Link href={user ? "/account" : "/login"} className="hidden md:flex flex-col items-center group">
               <User className="w-5 h-5 text-gray-600 group-hover:text-amber-600 transition" />
               <span className="text-[11px] text-gray-500 group-hover:text-amber-600 mt-0.5">
@@ -58,7 +56,6 @@ export default function Header() {
               <User className="w-5 h-5 text-gray-600" />
             </Link>
             
-            {/* Избранное */}
             <Link href="/favorites" className="relative flex flex-col items-center group">
               <Heart className="w-5 h-5 text-gray-600 group-hover:text-amber-600 transition" />
               <span className="hidden md:block text-[11px] text-gray-500 group-hover:text-amber-600 mt-0.5">Избранное</span>
@@ -69,7 +66,6 @@ export default function Header() {
               )}
             </Link>
             
-            {/* Корзина */}
             <Link href="/cart" className="relative flex flex-col items-center group">
               <ShoppingBag className="w-5 h-5 text-gray-600 group-hover:text-amber-600 transition" />
               <span className="hidden md:block text-[11px] text-gray-500 group-hover:text-amber-600 mt-0.5">Корзина</span>
@@ -80,23 +76,19 @@ export default function Header() {
               )}
             </Link>
             
-            {/* Бургер-меню для мобилки */}
             <div className="md:hidden">
               <MobileMenu />
             </div>
           </div>
         </div>
 
-        {/* Навигация с выпадающим меню "Комнаты" (только для десктопа) */}
+        {/* Навигация для десктопа */}
         <nav className="hidden md:flex gap-8 py-2 text-sm font-medium text-gray-700 border-t border-gray-100">
           <a href="#" className="hover:text-amber-600 transition">Каталог</a>
-          
-          {/* ВЫПАДАЮЩЕЕ МЕНЮ "КОМНАТЫ" */}
           <div className="relative group">
             <button className="hover:text-amber-600 transition">Комнаты</button>
             <div className="absolute left-0 top-full mt-1 w-[650px] bg-white shadow-xl rounded-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 p-6">
-                {/* Спальня */}
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-2">Спальня</h4>
                   <ul className="space-y-1 text-sm">
@@ -108,8 +100,6 @@ export default function Header() {
                     <li><Link href="/catalog/spalnya?type=zerkala" className="text-gray-600 hover:text-amber-600 block">Зеркала</Link></li>
                   </ul>
                 </div>
-
-                {/* Гостиная */}
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-2">Гостиная</h4>
                   <ul className="space-y-1 text-sm">
@@ -120,8 +110,6 @@ export default function Header() {
                     <li><Link href="/catalog/gostinaya?type=stellazhi" className="text-gray-600 hover:text-amber-600 block">Стеллажи</Link></li>
                   </ul>
                 </div>
-
-                {/* Кухня */}
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-2">Кухня</h4>
                   <ul className="space-y-1 text-sm">
@@ -131,8 +119,6 @@ export default function Header() {
                     <li><Link href="/catalog/kuhnya?type=stulya" className="text-gray-600 hover:text-amber-600 block">Стулья</Link></li>
                   </ul>
                 </div>
-
-                {/* Столовая */}
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-2">Столовая</h4>
                   <ul className="space-y-1 text-sm">
@@ -145,7 +131,6 @@ export default function Header() {
               </div>
             </div>
           </div>
-
           <a href="#" className="hover:text-amber-600 transition">Скидки</a>
           <a href="#" className="hover:text-amber-600 transition">Бренды</a>
           <Link href="/delivery" className="hover:text-amber-600 transition">Доставка</Link>
@@ -161,12 +146,12 @@ export default function Header() {
                 type="text"
                 name="q"
                 placeholder="Поиск товаров..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-full text-sm focus:outline-none focus:border-amber-500"
+                className="w-full px-4 py-2 border border-gray-400 rounded-full text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-amber-500 bg-white"
                 autoFocus
               />
             </form>
             <button onClick={() => setIsMobileSearchOpen(false)} className="p-2">
-              <X className="w-5 h-5 text-gray-600" />
+              <X className="w-5 h-5 text-gray-700" />
             </button>
           </div>
         </div>
