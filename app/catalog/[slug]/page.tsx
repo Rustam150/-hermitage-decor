@@ -371,73 +371,93 @@ export default function CategoryPage() {
       </div>
 
       {/* Мобильные фильтры (модалка) */}
-      {isFilterOpen && (
-        <div className="fixed inset-0 z-50 bg-white overflow-y-auto md:hidden">
-          <div className="p-4 border-b flex justify-between items-center sticky top-0 bg-white">
-            <h3 className="font-medium text-gray-900">Фильтры</h3>
-            <button onClick={() => setIsFilterOpen(false)}>
-              <X className="w-5 h-5 text-gray-700" />
-            </button>
-          </div>
-          <div className="p-4 space-y-4">
-            <div>
-              <h4 className="text-sm font-medium text-gray-900 mb-2">Цена</h4>
-              <div className="flex gap-2">
-                <input type="number" placeholder="от" value={priceMin} onChange={e => setPriceMin(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900" />
-                <input type="number" placeholder="до" value={priceMax} onChange={e => setPriceMax(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900" />
-              </div>
-            </div>
-            
-            <div>
-              <h4 className="text-sm font-medium text-gray-900 mb-2">Бренд / Страна</h4>
-              <div className="space-y-2 max-h-40 overflow-y-auto">
-                {brands.map((brand) => (
-                  <label key={brand} className="flex items-center gap-2 text-sm text-gray-700">
-                    <input type="checkbox" checked={selectedBrands.includes(brand)} onChange={() => toggleBrand(brand)} className="rounded" />
-                    {brand}
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-sm font-medium text-gray-900 mb-2">Материал</h4>
-              <div className="space-y-2 max-h-40 overflow-y-auto">
-                {materials.map((material) => (
-                  <label key={material} className="flex items-center gap-2 text-sm text-gray-700">
-                    <input type="checkbox" checked={selectedMaterials.includes(material)} onChange={() => toggleMaterial(material)} className="rounded" />
-                    {material}
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-sm font-medium text-gray-900 mb-2">Цвет</h4>
-              <div className="space-y-2 max-h-40 overflow-y-auto">
-                {colors.map((color) => (
-                  <label key={color} className="flex items-center gap-2 text-sm text-gray-700">
-                    <input type="checkbox" checked={selectedColors.includes(color)} onChange={() => toggleColor(color)} className="rounded" />
-                    <span className="w-3 h-3 rounded-full border border-gray-300 inline-block ml-1" style={{ backgroundColor: color === "Белый" ? "#fff" : color === "Черный" ? "#000" : color === "Серый" ? "#9ca3af" : color === "Коричневый" ? "#8b5a2b" : "#d1d5db" }}></span>
-                    {color}
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <label className="flex items-center gap-2 text-sm text-gray-700">
-                <input type="checkbox" checked={showInStock} onChange={e => setShowInStock(e.target.checked)} className="rounded" />
-                Только в наличии
-              </label>
-            </div>
-
-            <button onClick={() => setIsFilterOpen(false)} className="w-full bg-gray-900 text-white py-2.5 rounded-lg font-medium mt-4">
-              Применить
-            </button>
-          </div>
+{isFilterOpen && (
+  <div className="fixed inset-0 z-50 bg-white overflow-y-auto md:hidden">
+    <div className="p-4 border-b flex justify-between items-center sticky top-0 bg-white">
+      <h3 className="font-medium text-gray-900">Фильтры</h3>
+      <button onClick={() => setIsFilterOpen(false)}>
+        <X className="w-5 h-5 text-gray-700" />
+      </button>
+    </div>
+    <div className="p-4 space-y-4">
+      <div>
+        <h4 className="text-sm font-medium text-gray-900 mb-2">Цена</h4>
+        <div className="flex gap-2">
+          <input type="number" placeholder="от" value={priceMin} onChange={e => setPriceMin(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900" />
+          <input type="number" placeholder="до" value={priceMax} onChange={e => setPriceMax(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900" />
         </div>
-      )}
+      </div>
+      
+      <div>
+        <h4 className="text-sm font-medium text-gray-900 mb-2">Бренд / Страна</h4>
+        <div className="space-y-2 max-h-40 overflow-y-auto">
+          {brands.map((brand) => (
+            <label key={brand} className="flex items-center gap-2 text-sm text-gray-700">
+              <input type="checkbox" checked={selectedBrands.includes(brand)} onChange={() => toggleBrand(brand)} className="rounded" />
+              {brand}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h4 className="text-sm font-medium text-gray-900 mb-2">Материал</h4>
+        <div className="space-y-2 max-h-40 overflow-y-auto">
+          {materials.map((material) => (
+            <label key={material} className="flex items-center gap-2 text-sm text-gray-700">
+              <input type="checkbox" checked={selectedMaterials.includes(material)} onChange={() => toggleMaterial(material)} className="rounded" />
+              {material}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h4 className="text-sm font-medium text-gray-900 mb-2">Цвет</h4>
+        <div className="space-y-2 max-h-40 overflow-y-auto">
+          {colors.map((color) => (
+            <label key={color} className="flex items-center gap-2 text-sm text-gray-700">
+              <input type="checkbox" checked={selectedColors.includes(color)} onChange={() => toggleColor(color)} className="rounded" />
+              <span
+                className="w-4 h-4 rounded-full border border-gray-300"
+                style={{
+                  backgroundColor:
+                    color === "Белый" ? "#fff" :
+                    color === "Черный" ? "#000" :
+                    color === "Серый" ? "#9ca3af" :
+                    color === "Коричневый" ? "#8b5a2b" :
+                    color === "Зеленый" ? "#22c55e" :
+                    color === "Синий" ? "#3b82f6" :
+                    color === "Красный" ? "#ef4444" :
+                    color === "Розовый" ? "#ec4899" :
+                    color === "Бордовый" ? "#7f1d1d" :
+                    color === "Орех" ? "#b45309" :
+                    color === "Венге" ? "#4a2c2c" :
+                    color === "Дуб" ? "#d97706" :
+                    color === "Золотой" ? "#eab308" :
+                    color === "Серебро" ? "#9ca3af" :
+                    "#d1d5db"
+                }}
+              ></span>
+              {color}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <label className="flex items-center gap-2 text-sm text-gray-700">
+          <input type="checkbox" checked={showInStock} onChange={e => setShowInStock(e.target.checked)} className="rounded" />
+          Только в наличии
+        </label>
+      </div>
+
+      <button onClick={() => setIsFilterOpen(false)} className="w-full bg-gray-900 text-white py-2.5 rounded-lg font-medium mt-4">
+        Применить
+      </button>
+    </div>
+  </div>
+)}
     </div>
   );
 }
