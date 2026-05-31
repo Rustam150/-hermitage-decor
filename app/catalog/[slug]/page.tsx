@@ -427,23 +427,23 @@ export default function CategoryPage() {
           className="w-4 h-4 rounded-full border border-gray-300"
           style={{
             backgroundColor:
-              color === "Белый" ? "#ffffff" :
-              color === "Черный" ? "#000000" :
-              color === "Серый" ? "#9ca3af" :
-              color === "Коричневый" ? "#8b5a2b" :
-              color === "Зеленый" ? "#22c55e" :
-              color === "Синий" ? "#3b82f6" :
-              color === "Красный" ? "#ef4444" :
-              color === "Розовый" ? "#ec4899" :
-              color === "Бордовый" ? "#7f1d1d" :
-              color === "Орех" ? "#b45309" :
-              color === "Венге" ? "#4a2c2c" :
-              color === "Дуб" ? "#d97706" :
-              color === "Золотой" ? "#eab308" :
-              color === "Серебро" ? "#c0c0c0" :
-              color === "Прозрачный" ? "rgba(0,0,0,0)" :
-              color === "Бежевый" ? "#d4b896" :
-              "#d1d5db"
+  color === "Белый" ? "#ffffff" :
+  color === "Черный" ? "#000000" :
+  color === "Серый" ? "#9ca3af" :
+  color === "Коричневый" ? "#8b5a2b" :
+  color === "Зеленый" ? "#22c55e" :
+  color === "Синий" ? "#3b82f6" :
+  color === "Красный" ? "#ef4444" :
+  color === "Розовый" ? "#ec4899" :
+  color === "Бордовый" ? "#7f1d1d" :
+  color === "Орех" ? "#b45309" :
+  color === "Венге" ? "#4a2c2c" :
+  color === "Дуб" ? "#d97706" :
+  color === "Золотой" ? "#d4af37" :
+  color === "Серебро" ? "#a0a0a0" :
+  color === "Бежевый" ? "#d4b896" :
+  color === "Прозрачный" ? "#e0f2fe" :
+  "#d1d5db"
           }}
         ></span>
         {color}
