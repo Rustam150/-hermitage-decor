@@ -6,7 +6,6 @@ import { Search, User, Heart, ShoppingBag, X } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useFavorites } from "@/context/FavoritesContext";
 import { useAuth } from "@/context/AuthContext";
-import MobileMenu from "@/components/MobileMenu";
 
 export default function Header() {
   const { totalItems } = useCart();
@@ -25,7 +24,7 @@ export default function Header() {
             </span>
           </Link>
 
-          {/* Поиск — только на десктопе (ИСПРАВЛЕН) */}
+          {/* Поиск — только на десктопе */}
           <form action="/search" method="GET" className="hidden md:flex flex-1 max-w-2xl">
             <div className="relative w-full">
               <input
@@ -42,10 +41,12 @@ export default function Header() {
 
           {/* Иконки */}
           <div className="flex items-center gap-4 shrink-0">
+            {/* Поиск на мобилке — иконка */}
             <button onClick={() => setIsMobileSearchOpen(true)} className="md:hidden p-1">
               <Search className="w-5 h-5 text-gray-600" />
             </button>
             
+            {/* Профиль */}
             <Link href={user ? "/account" : "/login"} className="hidden md:flex flex-col items-center group">
               <User className="w-5 h-5 text-gray-600 group-hover:text-amber-600 transition" />
               <span className="text-[11px] text-gray-500 group-hover:text-amber-600 mt-0.5">
@@ -56,6 +57,7 @@ export default function Header() {
               <User className="w-5 h-5 text-gray-600" />
             </Link>
             
+            {/* Избранное */}
             <Link href="/favorites" className="relative flex flex-col items-center group">
               <Heart className="w-5 h-5 text-gray-600 group-hover:text-amber-600 transition" />
               <span className="hidden md:block text-[11px] text-gray-500 group-hover:text-amber-600 mt-0.5">Избранное</span>
@@ -66,6 +68,7 @@ export default function Header() {
               )}
             </Link>
             
+            {/* Корзина */}
             <Link href="/cart" className="relative flex flex-col items-center group">
               <ShoppingBag className="w-5 h-5 text-gray-600 group-hover:text-amber-600 transition" />
               <span className="hidden md:block text-[11px] text-gray-500 group-hover:text-amber-600 mt-0.5">Корзина</span>
@@ -75,10 +78,6 @@ export default function Header() {
                 </span>
               )}
             </Link>
-            
-            <div className="md:hidden">
-              <MobileMenu />
-            </div>
           </div>
         </div>
 
