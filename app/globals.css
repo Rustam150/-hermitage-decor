@@ -24,3 +24,14 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Акцентные цвета */
+:root {
+  --accent: #8B5A2B;
+  --accent-light: #A07242;
+  --accent-dark: #6B3F1B;
+}
+
+.hover\:accent-hover:hover {
+  background-color: var(--accent-light);
+}
