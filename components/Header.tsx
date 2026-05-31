@@ -23,6 +23,7 @@ export default function Header() {
             </span>
           </Link>
 
+          {/* Поиск — только на десктопе */}
           <form action="/search" method="GET" className="hidden md:flex flex-1 max-w-2xl">
             <div className="relative w-full">
               <input
@@ -37,31 +38,46 @@ export default function Header() {
             </div>
           </form>
 
+          {/* Иконки */}
           <div className="flex items-center gap-4 shrink-0">
+            {/* Поиск на мобилке — иконка */}
+            <button className="md:hidden p-1">
+              <Search className="w-5 h-5 text-gray-600" />
+            </button>
+            
+            {/* Профиль: десктоп с подписью, мобилка только иконка */}
             <Link href={user ? "/account" : "/login"} className="hidden md:flex flex-col items-center group">
               <User className="w-5 h-5 text-gray-600 group-hover:text-amber-600 transition" />
               <span className="text-[11px] text-gray-500 group-hover:text-amber-600 mt-0.5">
                 {user ? "Профиль" : "Войти"}
               </span>
             </Link>
+            <Link href={user ? "/account" : "/login"} className="md:hidden p-1">
+              <User className="w-5 h-5 text-gray-600" />
+            </Link>
+            
+            {/* Избранное */}
             <Link href="/favorites" className="relative flex flex-col items-center group">
               <Heart className="w-5 h-5 text-gray-600 group-hover:text-amber-600 transition" />
-              <span className="text-[11px] text-gray-500 group-hover:text-amber-600 mt-0.5">Избранное</span>
+              <span className="hidden md:block text-[11px] text-gray-500 group-hover:text-amber-600 mt-0.5">Избранное</span>
               {totalFavorites > 0 && (
                 <span className="absolute -top-1 -right-2 bg-amber-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
                   {totalFavorites}
                 </span>
               )}
             </Link>
+            
+            {/* Корзина */}
             <Link href="/cart" className="relative flex flex-col items-center group">
               <ShoppingBag className="w-5 h-5 text-gray-600 group-hover:text-amber-600 transition" />
-              <span className="text-[11px] text-gray-500 group-hover:text-amber-600 mt-0.5">Корзина</span>
+              <span className="hidden md:block text-[11px] text-gray-500 group-hover:text-amber-600 mt-0.5">Корзина</span>
               {totalItems > 0 && (
                 <span className="absolute -top-1 -right-2 bg-amber-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
                   {totalItems}
                 </span>
               )}
             </Link>
+            
             {/* Бургер-меню для мобилки */}
             <div className="md:hidden">
               <MobileMenu />
@@ -78,7 +94,6 @@ export default function Header() {
             <button className="hover:text-amber-600 transition">Комнаты</button>
             <div className="absolute left-0 top-full mt-1 w-[650px] bg-white shadow-xl rounded-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 p-6">
-                
                 {/* Спальня */}
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-2">Спальня</h4>
@@ -125,7 +140,6 @@ export default function Header() {
                     <li><Link href="/catalog/stolovaya?type=bufety" className="text-gray-600 hover:text-amber-600 block">Буфеты</Link></li>
                   </ul>
                 </div>
-
               </div>
             </div>
           </div>
